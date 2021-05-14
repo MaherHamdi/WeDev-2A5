@@ -1,0 +1,122 @@
+<?php
+include_once 'model/User.php';
+include_once 'controller/userC.php';
+
+
+$message = "";
+$userC = new userC();
+if (
+    isset($_POST["email"]) &&
+    isset($_POST["password"])
+) {
+    if (
+        !empty($_POST["email"]) &&
+        !empty($_POST["password"])
+    ) {
+        $message = $userC->connexionUser($_POST["email"], md5($_POST["password"]));
+        $_SESSION['e'] = $_POST["email"];
+        if ($message != 'email est incorrect') {
+            if ($message != 'password est incorrect') {
+                $userC = new UserC();
+                $res=$userC->recupererEmail($_POST["email"]);
+  if($res['verifier']==1)
+{
+            header('Location:welcome.php');
+}
+else{
+   
+    $key=$res['code_verification'];
+    $to       = $_POST['email'];
+    $subject  = 'Code de verification';
+    $message  = 'Votre code de validation est :'.$key;
+    $headers  = 'From: [projetbelevedere]@gmail.com' . "\r\n" .
+                'MIME-Version: 1.0' . "\r\n" .
+                'Content-type: text/html; charset=utf-8';
+    $userC->sendMail($to, $subject, $message, $headers);
+    header('Location:verification_code.php');
+  
+
+
+}
+            }
+            else {
+                $message = 'password est incorrect';
+            }
+        } else {
+            $message = 'email est incorrect';
+        }
+    } else
+        $message = "Missing information";
+}
+?>
+<?php /*require_once "controllerUserData.php";*/ ?>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link href="assets/css/log.css" rel="stylesheet">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span style="  font-family: 'Roboto', sans-serif;" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body form login-form">
+
+                <form action="" method="POST" autocomplete="">
+                    <h2 class="text-center">Login Form</h2>
+                    <p class="text-center">Login with your email and password.</p>
+                    <?php if ($message != "") { ?>
+                    <script>
+                    $(document).ready(function() { $('#loginModal').modal('show');
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+});
+                    </script>
+                        <p class="alert alert-danger text-center">
+                            <?php {
+                                echo $message;
+                                
+                            } ?>
+                        </p>
+                    <?php } ?>
+                    <?php
+                    /*
+                    if(count($errors) > 0){
+                       */ ?>
+                    <?php
+                    /*
+                            foreach($errors as $showerror){
+                                echo $showerror;
+                            }
+                           */ ?>
+                    <?php
+                    /*
+                    }*/
+                    ?>
+                    <div class="form-group">
+                        <input class="form-control" type="email" name="email" placeholder="Email Address" required value="<?php /* echo $email*/ ?>">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="link forget-pass text-left"><a href="forgot-password.php">Forgot password?</a></div>
+                    <div class="form-group">
+                        <input class="form-control button" type="submit" name="login" value="Login">
+                    </div>
+                    <div class="link login-link text-center">Not yet a member? <a style="cursor: pointer;" data-toggle="modal" href="#registerModal" data-dismiss="modal">Signup now</a></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script>
+<!-- Popper JS -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js'></script>
+<!-- Bootstrap JS -->
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js'></script>
+<!-- Custom Script -->
+<script src="/assets/js/login.js"></script>
