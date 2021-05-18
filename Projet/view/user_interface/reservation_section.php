@@ -60,6 +60,7 @@
       <div class="form-group mt-3">
         <textarea class="form-control" name="message" rows="5" placeholder="votre avis concerant notre service!!"></textarea>
       </div>
+      
       <div class="text-center"><button type="submit" name="reserver">Reserver Maintenant</button></div>
     </form>
 

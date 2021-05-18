@@ -41,11 +41,12 @@ require_once 'c:/wamp64/www/Projet/controller/userC.php';
     }
     $prix_ticket=$result['prix_ticket'];
     // create an instance of the controller
-   $reservationC = new ReservationC();
+   
    $userC = new userC();
  $u = $userC->recupererUser($_POST['id_user']);
-    if ( isset($_POST["reserver"]) ) 
-  {
+
+    if ( isset($_POST["reserver"])) 
+  {    
             $reservation = new reservation(
                 $_POST['id_user'],
                 $idd,
@@ -69,7 +70,7 @@ require_once 'c:/wamp64/www/Projet/controller/userC.php';
             $headers  = 'From: [projetbelevedere]@gmail.com' . "\r\n" .
                         'MIME-Version: 1.0' . "\r\n" .
                         'Content-type: text/html; charset=utf-8';
-                        $reservationC->ajouterReservation($reservation);
+                        
             $reservationC->sendMail($to, $subject, $message, $headers);
             
             $reservationC->ajouterReservation($reservation);

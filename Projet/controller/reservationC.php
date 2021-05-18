@@ -120,10 +120,6 @@ catch(Exception $e)
         echo "Email sending failed";
     }
 
-    public function rechercher_res()
-    {
-        
-    }
 
 }
 
