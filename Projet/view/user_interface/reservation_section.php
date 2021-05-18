@@ -7,7 +7,7 @@
     <form action="ajouter_reservation.php" method="POST" class="php-email-form">
 
       <div class="row">
-
+        
         <div class="col-lg-4 col-md-6 form-group mt-3">
           <input type="date" name="date" class="form-control" id="date" placeholder="Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
         </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="col-lg-4 col-md-6 form-group mt-3">
 
-          <input type="number" class="form-control" name="people" id="mytextfield" placeholder="# of people" data-rule="minlen:1" required>
+          <input type="number" class="form-control" name="people" id="people" placeholder="# of people" data-rule="minlen:1" required>
           <div class="input-group-prepend">
             <p><span class="input-group-text total">0</span></p>
           </div>
@@ -37,12 +37,12 @@
           <script>
             var $dropdown = $('#totalprix');
             $dropdown.on('change', calculateCount);
-            var $input = $('#mytextfield');
+            var $input = $('#people');
             
             $input.on('keyup change', calculateCount);
 
             function calculateCount() {
-              var dropDownValue = $dropdown.find('option:selected').attr('id');
+              var dropDownValue = $dropdown.find('option:selected');
               var inputValue = parseInt($input.val());
               var getvalue = $("#totalprix").val();
               console.log(inputValue);
@@ -60,7 +60,6 @@
       <div class="form-group mt-3">
         <textarea class="form-control" name="message" rows="5" placeholder="votre avis concerant notre service!!"></textarea>
       </div>
-
       <div class="text-center"><button type="submit" name="reserver">Reserver Maintenant</button></div>
     </form>
 

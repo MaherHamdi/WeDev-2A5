@@ -6,7 +6,7 @@ include "c:/wamp64/www/Projet/config.php";
     require_once 'c:/wamp64/www/Projet/model/User.php';
 require_once 'c:/wamp64/www/Projet/controller/userC.php';
     
-
+     
     // create user
     $resrevation = null;
     $type=$_POST['type_ticket'];
@@ -69,7 +69,9 @@ require_once 'c:/wamp64/www/Projet/controller/userC.php';
             $headers  = 'From: [projetbelevedere]@gmail.com' . "\r\n" .
                         'MIME-Version: 1.0' . "\r\n" .
                         'Content-type: text/html; charset=utf-8';
+                        $reservationC->ajouterReservation($reservation);
             $reservationC->sendMail($to, $subject, $message, $headers);
+            
             $reservationC->ajouterReservation($reservation);
             
             
